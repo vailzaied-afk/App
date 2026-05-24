@@ -45,33 +45,43 @@ public class ProductBasket {
 
         return false;
     }
-
-    public void wholeCart() {
-        System.out.println("Содержимое корзины:");
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Содержимое корзины:\n");
 
         if (products == null) {
-            System.out.println("Корзина не инициализирована.");
-            System.out.println("Итого: 0 руб.");
-            return;
+            sb.append("Корзина не инициализирована.\n");
+            sb.append("Итого: 0 руб.");
+            return sb.toString();
         }
+
         double totalSum = 0;
-        boolean hasItems = false;
+        int specialItemsCount = 0;
 
         for (Product product : products) {
             if (product != null) {
-                System.out.println("- " + product.getName() + ": " + product.getPrice() + " руб.");
+                sb.append(product).append("\n");
+
                 totalSum += product.getPrice();
-                hasItems = true;
+
+                if (product.isSpecial()) {
+                    specialItemsCount++;
+                }
             } else {
-                System.out.println("- [Пустая ячейка]");
+                sb.append("- [Пустая ячейка]\n");
             }
         }
 
-        if (!hasItems) {
-            System.out.println("Корзина пуста (все ячейки свободны).");
-        }
-        System.out.println("Итого: " + totalSum + " руб.");
+        sb.append("Специальных товаров: ").append(specialItemsCount).append("\n");
+        sb.append("Итого: ").append(totalSum).append(" руб.");
+
+        return sb.toString();
     }
+
+
+
+
 
     public void clearCartCompletely() {
         if (products != null) {
