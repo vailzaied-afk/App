@@ -13,9 +13,7 @@ public abstract class Product {
 
     public abstract double getPrice();
 
-    public boolean isSpecial() {
-        return false;
-    }
+    public abstract boolean isSpecial();
 
 
 }
