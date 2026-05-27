@@ -1,6 +1,8 @@
 package org.skypro.skyshop;
 
-public abstract class Product {
+import org.skypro.skyshop.dop.Searchable;
+
+public abstract class Product implements Searchable{
     private final String name;
 
     public Product(String name) {
