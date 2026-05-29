@@ -1,6 +1,8 @@
 package org.skypro.skyshop;
 
-public class SimpleProduct extends Product{
+import org.skypro.skyshop.dop.Article;
+
+public class SimpleProduct extends Product {
     private double price;
 
     public SimpleProduct(String name, double price) {
@@ -25,5 +27,14 @@ public class SimpleProduct extends Product{
     }
 
 
+    @Override
+    public String searchTerm() {
 
+        return getName() + " PRODUCT " + this.toString() + " ARTICLE ";
+    }
+
+    @Override
+    public void contentSearch() {
+
+    }
 }

@@ -24,4 +24,14 @@ public class FixPriceProduct extends Product{
     }
 
 
+    @Override
+    public String searchTerm() {
+
+        return getName() + " PRODUCT " + this.toString() + " ARTICLE ";
+    }
+
+    @Override
+    public void contentSearch() {
+
+    }
 }

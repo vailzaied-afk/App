@@ -1,6 +1,19 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.dop.Article;
+import org.skypro.skyshop.dop.SearchEngine;
+import org.skypro.skyshop.dop.Searchable;
+
 public class App {
+    private static void printSearchResults(Searchable[] results) {
+        if (results.length == 0) {
+            System.out.println("Ничего не найдено.");
+            return;
+        }
+        for (Searchable item : results) {
+            System.out.println("- " + item.searchTerm());
+        }
+    }
     public static void main(String[] args) {
         ProductBasket productBasket = new ProductBasket();
         FixPriceProduct apple = new FixPriceProduct("Яблоко", 50);
@@ -18,6 +31,36 @@ public class App {
         productBasket.addProduct(orange);
         System.out.println("\n--- Попытка добавить шестой продукт ---");
         productBasket.addProduct(pineapple);
+
+        SearchEngine searchEngine = new SearchEngine(4);
+        Searchable book  = new SimpleProduct("Книга", 50);
+        Searchable book1  = new SimpleProduct("Книга1", 500);
+        Searchable book2  = new SimpleProduct("Книга2", 510);
+        Searchable book3  = new SimpleProduct("Книга3", 520);
+        Searchable book4  = new SimpleProduct("Книга4", 530);
+        Searchable book5  = new SimpleProduct("Книга5", 540);
+        Searchable artBook = (Searchable) new Article("Тест", "История");
+        Searchable artBook1 = (Searchable) new Article("Краткий текст 2", "История о второй книге");
+
+        searchEngine.add(book);
+        searchEngine.add(book1);
+        searchEngine.add(artBook);
+        searchEngine.add(artBook1);
+
+
+        System.out.println("--- Результаты поиска по запросу 'Книга' ---");
+        printSearchResults(searchEngine.search("Книга"));
+
+        System.out.println("\n--- Результаты поиска по запросу 'Тест' ---");
+        printSearchResults(searchEngine.search("Тест"));
+
+        System.out.println("\n--- Результаты поиска по отсутствующему запросу 'Пицца' ---");
+        printSearchResults(searchEngine.search("Пицца"));
+
+
+
+
+
 
 
         System.out.println(productBasket);
