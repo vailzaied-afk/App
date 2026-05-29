@@ -22,7 +22,7 @@ public class Article implements Searchable{
     @Override
     public String searchTerm() {
 
-        return getName() + " PRODUCT " + this.toString() + " ARTICLE ";
+        return "Название статьи " + getName()  + " Текст статьи " + getText();
     }
 
     @Override
@@ -32,6 +32,6 @@ public class Article implements Searchable{
 
     @Override
     public String toString() {
-        return "Название статьи:\n" + getName() + "\nТекст статьи:\n" + getText();
+        return name + "\n" + text;
     }
 }

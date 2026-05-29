@@ -32,7 +32,7 @@ public class App {
         System.out.println("\n--- Попытка добавить шестой продукт ---");
         productBasket.addProduct(pineapple);
 
-        SearchEngine searchEngine = new SearchEngine();
+        SearchEngine searchEngine = new SearchEngine(4);
         Searchable book  = new SimpleProduct("Книга", 50);
         Searchable book1  = new SimpleProduct("Книга1", 500);
         Searchable book2  = new SimpleProduct("Книга2", 510);

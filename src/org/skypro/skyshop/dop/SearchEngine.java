@@ -1,11 +1,11 @@
 package org.skypro.skyshop.dop;
 
-public class SearchEngine {
+public class SearchEngine implements Searchable{
     private Searchable[] lines;
     private int count;
-    public SearchEngine() {
+    public SearchEngine(int cell) {
 
-        lines = new Searchable[4];
+        lines = new Searchable[cell];
     }
     public void add(Searchable element ) {
 
@@ -36,4 +36,13 @@ public class SearchEngine {
         return trimmedResults;
     }
 
+    @Override
+    public String searchTerm() {
+        return null;
+    }
+
+    @Override
+    public void contentSearch() {
+
+    }
 }

@@ -4,7 +4,8 @@ public interface Searchable{
 
     String searchTerm();
     void contentSearch();
-    default void getStringRepresentation(String objectName, String objecType){
-        System.out.println("Имя: " + objectName + "- Тип: " + objecType);
+    default String getStringRepresentation(String objectName, String objectType){
+        return "Имя: " + objectName + "- Тип: " + objectType;
     }
+
 }
