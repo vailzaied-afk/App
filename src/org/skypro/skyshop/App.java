@@ -14,39 +14,38 @@ public class App {
             System.out.println("- " + item.searchTerm());
         }
     }
+
     public static void main(String[] args) {
         ProductBasket productBasket = new ProductBasket();
-        FixPriceProduct apple = new FixPriceProduct("Яблоко", 50);
-        DiscountedProduct banana = new DiscountedProduct("Банан", 30, 10);
-        DiscountedProduct lemon = new DiscountedProduct("Лимон", 30, 20);
-        FixPriceProduct kiwi = new FixPriceProduct("Киви", 100);
-        Product orange = new SimpleProduct("Апельсин", 30);
-        Product pineapple = new SimpleProduct("Ананас", 30);
 
+        FixPriceProduct apple = new FixPriceProduct("Яблоко", "Фрукт", 50);
+        DiscountedProduct banana = new DiscountedProduct("Банан", "Фрукт", 30, 10);
+        DiscountedProduct lemon = new DiscountedProduct("Лимон", "Фрукт", 30, 20);
+        FixPriceProduct kiwi = new FixPriceProduct("Киви", "Фрукт", 100);
+        Product orange = new SimpleProduct("Апельсин", "Фрукт", 30);
+        Product pineapple = new SimpleProduct("Ананас", "Фрукт", 50);
 
         productBasket.addProduct(apple);
         productBasket.addProduct(banana);
         productBasket.addProduct(lemon);
         productBasket.addProduct(kiwi);
         productBasket.addProduct(orange);
+
         System.out.println("\n--- Попытка добавить шестой продукт ---");
         productBasket.addProduct(pineapple);
 
         SearchEngine searchEngine = new SearchEngine(4);
-        Searchable book  = new SimpleProduct("Книга", 50);
-        Searchable book1  = new SimpleProduct("Книга1", 500);
-        Searchable book2  = new SimpleProduct("Книга2", 510);
-        Searchable book3  = new SimpleProduct("Книга3", 520);
-        Searchable book4  = new SimpleProduct("Книга4", 530);
-        Searchable book5  = new SimpleProduct("Книга5", 540);
-        Searchable artBook = (Searchable) new Article("Тест", "История");
-        Searchable artBook1 = (Searchable) new Article("Краткий текст 2", "История о второй книге");
+        Searchable book = new SimpleProduct("Книга", "Печатное издание", 505);
+        Searchable book1 = new SimpleProduct("Книга1", "Печатное издание", 500);
+
+        // ИСПРАВЛЕНО: Удалено лишнее явное приведение типов (Searchable)
+        Searchable artBook = new Article("Тест", "История");
+        Searchable artBook1 = new Article("Краткий текст 2", "История о второй книге");
 
         searchEngine.add(book);
         searchEngine.add(book1);
         searchEngine.add(artBook);
         searchEngine.add(artBook1);
-
 
         System.out.println("--- Результаты поиска по запросу 'Книга' ---");
         printSearchResults(searchEngine.search("Книга"));
@@ -57,14 +56,7 @@ public class App {
         System.out.println("\n--- Результаты поиска по отсутствующему запросу 'Пицца' ---");
         printSearchResults(searchEngine.search("Пицца"));
 
-
-
-
-
-
-
-        System.out.println(productBasket);
-
+        System.out.println("\n" + productBasket);
 
         System.out.println("\nТовар ЕСТЬ в корзине");
         String existingProduct = "Лимон";
@@ -81,6 +73,7 @@ public class App {
         } else {
             System.out.println("Успех: Товар \"" + missingProduct + "\" отсутствует в корзине.");
         }
+
         productBasket.clearCartCompletely();
         String searchProduct = "Яблоко";
 

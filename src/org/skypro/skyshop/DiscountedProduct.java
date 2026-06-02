@@ -4,11 +4,12 @@ public class DiscountedProduct extends Product{
     private double basePrice;
     private int discountInWholePercentages;
 
-    public DiscountedProduct(String name, double basePrice, int discountInWholePercentages) {
-        super(name);
+    public DiscountedProduct(String name, String type, double basePrice, int discountInWholePercentages) {
+        super(name, type);
         this.basePrice = basePrice;
         this.discountInWholePercentages = discountInWholePercentages;
     }
+
     @Override
     public double getPrice(){
 
@@ -33,7 +34,9 @@ public class DiscountedProduct extends Product{
     }
 
     @Override
-    public void contentSearch() {
-
+    public String getContentType() {
+        return null;
     }
+
+
 }
