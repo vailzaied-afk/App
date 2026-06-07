@@ -1,19 +1,16 @@
 package org.skypro.skyshop;
 
-import org.skypro.skyshop.dop.Article;
-
 public class SimpleProduct extends Product {
     private double price;
 
-    public SimpleProduct(String name, double price) {
-        super(name);
+    public SimpleProduct(String name, String type, double price) {
+        super(name, type);
         this.price = price;
     }
+
     @Override
-    public double getPrice(){
+    public double getPrice() {
         return this.price;
-
-
     }
 
     @Override
@@ -23,18 +20,17 @@ public class SimpleProduct extends Product {
 
     @Override
     public String toString() {
-        return getName() + ": " + getPrice() + " руб.";
+        return super.getName() + ": " + this.getPrice() + " руб.";
     }
-
 
     @Override
     public String searchTerm() {
-
-        return getName() + " PRODUCT " + this.toString() + " ARTICLE ";
+        return this.toString();
     }
 
     @Override
-    public void contentSearch() {
-
+    public String getContentType() {
+        return null;
     }
+
 }

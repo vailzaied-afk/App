@@ -3,8 +3,9 @@ package org.skypro.skyshop;
 public class FixPriceProduct extends Product{
     private final double FIX_PRICE;
 
-    public FixPriceProduct(String name, double FIX_PRICE) {
-        super(name);
+
+    public FixPriceProduct(String name, String type, double FIX_PRICE) {
+        super(name, type);
         this.FIX_PRICE = FIX_PRICE;
     }
 
@@ -31,7 +32,9 @@ public class FixPriceProduct extends Product{
     }
 
     @Override
-    public void contentSearch() {
-
+    public String getContentType() {
+        return null;
     }
+
+
 }

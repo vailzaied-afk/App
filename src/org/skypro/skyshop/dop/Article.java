@@ -1,8 +1,6 @@
 package org.skypro.skyshop.dop;
 
-import org.skypro.skyshop.Product;
-
-public class Article implements Searchable{
+public class Article implements Searchable {
 
     private final String name;
     private final String text;
@@ -19,16 +17,22 @@ public class Article implements Searchable{
     public String getText() {
         return text;
     }
+
     @Override
     public String searchTerm() {
-
-        return "Название статьи " + getName()  + " Текст статьи " + getText();
+        return this.toString();
     }
 
     @Override
-    public void contentSearch() {
-
+    public String getContentType() {
+        return "ARTICLE";
     }
+
+    @Override
+    public String getStringRepresentation(String objectName, String objectType) {
+        return "Имя: " + objectName + " - Тип: " + objectType;
+    }
+
 
     @Override
     public String toString() {
