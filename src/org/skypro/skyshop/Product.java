@@ -7,6 +7,7 @@ public abstract class Product implements Searchable {
     private final String type;
 
     public Product(String name, String type) {
+        Product.check(name);
         this.name = name;
         this.type = type;
     }
@@ -37,5 +38,10 @@ public abstract class Product implements Searchable {
     @Override
     public String getContentType() {
         return "PRODUCT";
+    }
+    public static void check(String name) throws IllegalArgumentException{
+        if (name == null || name.isBlank()){
+            throw new IllegalArgumentException("Message is null");
+        }
     }
 }

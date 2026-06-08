@@ -5,6 +5,8 @@ public class SimpleProduct extends Product {
 
     public SimpleProduct(String name, String type, double price) {
         super(name, type);
+        SimpleProduct.checkPrice(price);
+
         this.price = price;
     }
 
@@ -31,6 +33,14 @@ public class SimpleProduct extends Product {
     @Override
     public String getContentType() {
         return null;
+    }
+
+    public static void checkPrice(double price) throws IllegalArgumentException{
+        if (price<0){
+            throw new IllegalArgumentException("Не правильная цена");
+        }
+
+
     }
 
 }

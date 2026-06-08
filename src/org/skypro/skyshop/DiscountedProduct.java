@@ -6,6 +6,7 @@ public class DiscountedProduct extends Product{
 
     public DiscountedProduct(String name, String type, double basePrice, int discountInWholePercentages) {
         super(name, type);
+        DiscountedProduct.checkPriceDiscounted(basePrice, discountInWholePercentages);
         this.basePrice = basePrice;
         this.discountInWholePercentages = discountInWholePercentages;
     }
@@ -36,6 +37,12 @@ public class DiscountedProduct extends Product{
     @Override
     public String getContentType() {
         return null;
+    }
+
+    public static void checkPriceDiscounted(double basePrice, int discountInWholePercentages) throws IllegalArgumentException {
+        if (basePrice < 0 || discountInWholePercentages < 0 || discountInWholePercentages > 100) {
+            throw new IllegalArgumentException("Некорректные входные данные!");
+        }
     }
 
 
