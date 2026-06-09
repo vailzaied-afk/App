@@ -1,14 +1,15 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.BestResultNotFound.BestResultNotFound;
 import org.skypro.skyshop.dop.Article;
 import org.skypro.skyshop.dop.SearchEngine;
 import org.skypro.skyshop.dop.Searchable;
 
-import javax.xml.namespace.QName;
+import static org.skypro.skyshop.DiscountedProduct.checkPriceDiscounted;
 
 
 public class App {
-    private static void printSearchResults(Searchable[] results) {
+    private static void printSearchResults(Searchable[] results){
         if (results.length == 0) {
             System.out.println("Ничего не найдено.");
             return;
@@ -18,15 +19,20 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BestResultNotFound{
         ProductBasket productBasket = new ProductBasket();
         try {
             DiscountedProduct product = new DiscountedProduct(null, "Фрукт", 0, 1000);
             productBasket.addProduct(product);
         }catch (IllegalArgumentException e) {
-            System.out.println("Нет названия");
+            System.out.println("Нет названия или неверные параметры");
+
+        } catch (Exception e){
+            throw new BestResultNotFound("Не удалось добавить лучший результат в корзину", e);
 
         }
+
+
 
 
 

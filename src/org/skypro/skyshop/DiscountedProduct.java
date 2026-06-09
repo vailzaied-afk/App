@@ -40,8 +40,8 @@ public class DiscountedProduct extends Product{
     }
 
     public static void checkPriceDiscounted(double basePrice, int discountInWholePercentages) throws IllegalArgumentException {
-        if (basePrice < 0 || discountInWholePercentages < 0 || discountInWholePercentages > 100) {
-            throw new IllegalArgumentException("Некорректные входные данные!");
+        if (basePrice <= 0 || discountInWholePercentages < 0 || discountInWholePercentages > 100) {
+            throw new IllegalArgumentException("Цена ниже нуля или скидка должна быть в диапазоне от 0 до 100%. Передано: " + discountInWholePercentages);
         }
     }
 

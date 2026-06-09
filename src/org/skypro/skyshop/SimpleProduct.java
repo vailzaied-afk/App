@@ -36,8 +36,8 @@ public class SimpleProduct extends Product {
     }
 
     public static void checkPrice(double price) throws IllegalArgumentException{
-        if (price<0){
-            throw new IllegalArgumentException("Не правильная цена");
+        if (price<=0){
+            throw new IllegalArgumentException("Неправильная цена" + price);
         }
 
 

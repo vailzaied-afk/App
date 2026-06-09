@@ -65,7 +65,7 @@ public class SearchEngine {
 
         return count;
     }
-    public Searchable searchBestMatch(String query) {
+    public Searchable searchBestMatch(String query) throws BestResultNotFound {
         Searchable bestMatch = null;
         int maxCount = 0;
 
@@ -83,7 +83,7 @@ public class SearchEngine {
         }
 
         if (bestMatch == null) {
-            throw new BestResultNotFound("Объект не найден по запросу: " + query);
+            throw new BestResultNotFound("Объект не найден по запросу", query);
         }
 
         return bestMatch;
