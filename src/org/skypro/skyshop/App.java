@@ -1,11 +1,15 @@
 package org.skypro.skyshop;
 
+import org.skypro.skyshop.BestResultNotFound.BestResultNotFound;
 import org.skypro.skyshop.dop.Article;
 import org.skypro.skyshop.dop.SearchEngine;
 import org.skypro.skyshop.dop.Searchable;
 
+import static org.skypro.skyshop.DiscountedProduct.checkPriceDiscounted;
+
+
 public class App {
-    private static void printSearchResults(Searchable[] results) {
+    private static void printSearchResults(Searchable[] results){
         if (results.length == 0) {
             System.out.println("Ничего не найдено.");
             return;
@@ -15,11 +19,25 @@ public class App {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BestResultNotFound{
         ProductBasket productBasket = new ProductBasket();
+        try {
+            DiscountedProduct product = new DiscountedProduct(null, "Фрукт", 0, 1000);
+            productBasket.addProduct(product);
+        }catch (IllegalArgumentException e) {
+            System.out.println("Нет названия или неверные параметры");
+
+        } catch (Exception e){
+            throw new BestResultNotFound("Не удалось добавить лучший результат в корзину", e);
+
+        }
+
+
+
+
 
         FixPriceProduct apple = new FixPriceProduct("Яблоко", "Фрукт", 50);
-        DiscountedProduct banana = new DiscountedProduct("Банан", "Фрукт", 30, 10);
+        DiscountedProduct banana = new DiscountedProduct("Банан", "Фрукт", 30, 20);
         DiscountedProduct lemon = new DiscountedProduct("Лимон", "Фрукт", 30, 20);
         FixPriceProduct kiwi = new FixPriceProduct("Киви", "Фрукт", 100);
         Product orange = new SimpleProduct("Апельсин", "Фрукт", 30);
@@ -34,11 +52,15 @@ public class App {
         System.out.println("\n--- Попытка добавить шестой продукт ---");
         productBasket.addProduct(pineapple);
 
+
+
+
+
+
         SearchEngine searchEngine = new SearchEngine(4);
         Searchable book = new SimpleProduct("Книга", "Печатное издание", 505);
         Searchable book1 = new SimpleProduct("Книга1", "Печатное издание", 500);
 
-        // ИСПРАВЛЕНО: Удалено лишнее явное приведение типов (Searchable)
         Searchable artBook = new Article("Тест", "История");
         Searchable artBook1 = new Article("Краткий текст 2", "История о второй книге");
 
