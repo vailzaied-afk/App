@@ -1,21 +1,19 @@
 package org.skypro.skyshop;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ProductBasket {
-    private ArrayList<Product> products;
+    private Map<String, Product> products;
 
     public ProductBasket() {
-        this.products = new ArrayList<>();
+        this.products = new TreeMap<>();
 
     }
 
 
 
     public void clearProduct(Product product) {
-        if (products.remove(product)) {
+        if (products.remove(product.getName()) != null) {
             System.out.println("Удален продукт: " + product.getName());
         } else {
             System.out.println("Продукт " + product.getName() + " не найден в корзине.");
@@ -24,13 +22,14 @@ public class ProductBasket {
 
 
 
+
     public void addProduct(Product product) {
-        if (product == null) {
+            if (product == null || product.getName() == null){
             System.out.println("Ошибка: нельзя добавить пустой товар.");
             return;
         }
 
-        products.add(product);
+        products.put(product.getName(), product);
         System.out.println(product.getName() + " добавлен в корзину.");
     }
 
@@ -38,13 +37,8 @@ public class ProductBasket {
         if (productName == null) {
             return false;
         }
+        return products.containsKey(productName);
 
-        for (Product product : products) {
-            if (product != null && productName.equalsIgnoreCase(product.getName())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -56,7 +50,7 @@ public class ProductBasket {
         int specialItemsCount = 0;
         boolean isEmpty = true;
 
-        for (Product product : products) {
+        for (Product product : products.values()) {
             if (product != null) {
                 sb.append(product).append("\n");
                 totalSum += product.getPrice();

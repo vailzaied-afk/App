@@ -64,7 +64,7 @@ public class App {
 
 
 
-        SearchEngine searchEngine = new SearchEngine(4);
+        SearchEngine searchEngine = new SearchEngine(6);
         Searchable book = new SimpleProduct("Книга", "Печатное издание", 505);
         Searchable book1 = new SimpleProduct("Книга1", "Печатное издание", 500);
 
