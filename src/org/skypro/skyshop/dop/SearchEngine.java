@@ -2,11 +2,15 @@ package org.skypro.skyshop.dop;
 
 import org.skypro.skyshop.BestResultNotFound.BestResultNotFound;
 
+import java.util.ArrayList;
+
+import static java.nio.file.Files.lines;
+
 public class SearchEngine {
-    private final Searchable[] lines;
+    private final ArrayList<Searchable> lines;
 
     public SearchEngine(int cell) {
-        lines = new Searchable[cell];
+        this.lines = new ArrayList<>(cell);
     }
 
     public void add(Searchable element) {
@@ -14,9 +18,9 @@ public class SearchEngine {
             return;
         }
 
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i] == null) {
-                lines[i] = element;
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i) == null) {
+                lines.set(i, element);
                 return;
             }
         }
@@ -27,8 +31,8 @@ public class SearchEngine {
         Searchable[] results = new Searchable[5];
         int resultCount = 0;
 
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i] == null) {
+        for (int i = 0; i < lines.size(); i++) {
+            if (lines.get(i) == null) {
                 continue;
             }
 
@@ -36,8 +40,8 @@ public class SearchEngine {
                 break;
             }
 
-            if (lines[i].searchTerm().contains(query)) {
-                results[resultCount] = lines[i];
+            if (lines.get(i).searchTerm().contains(query)) {
+                results[resultCount] = lines.get(i);
                 resultCount++;
             }
         }

@@ -5,6 +5,9 @@ import org.skypro.skyshop.dop.Article;
 import org.skypro.skyshop.dop.SearchEngine;
 import org.skypro.skyshop.dop.Searchable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.skypro.skyshop.DiscountedProduct.checkPriceDiscounted;
 
 
@@ -21,6 +24,7 @@ public class App {
 
     public static void main(String[] args) throws BestResultNotFound{
         ProductBasket productBasket = new ProductBasket();
+        /*
         try {
             DiscountedProduct product = new DiscountedProduct(null, "Фрукт", 0, 1000);
             productBasket.addProduct(product);
@@ -32,6 +36,8 @@ public class App {
 
         }
 
+         */
+
 
 
 
@@ -39,25 +45,26 @@ public class App {
         FixPriceProduct apple = new FixPriceProduct("Яблоко", "Фрукт", 50);
         DiscountedProduct banana = new DiscountedProduct("Банан", "Фрукт", 30, 20);
         DiscountedProduct lemon = new DiscountedProduct("Лимон", "Фрукт", 30, 20);
-        FixPriceProduct kiwi = new FixPriceProduct("Киви", "Фрукт", 100);
+        FixPriceProduct kiwi = new FixPriceProduct("Киви", "Фрукт", 10);
         Product orange = new SimpleProduct("Апельсин", "Фрукт", 30);
-        Product pineapple = new SimpleProduct("Ананас", "Фрукт", 50);
 
         productBasket.addProduct(apple);
         productBasket.addProduct(banana);
         productBasket.addProduct(lemon);
         productBasket.addProduct(kiwi);
         productBasket.addProduct(orange);
+        System.out.println(productBasket);
 
-        System.out.println("\n--- Попытка добавить шестой продукт ---");
-        productBasket.addProduct(pineapple);
-
-
+        productBasket.clearProduct(lemon);
 
 
 
 
-        SearchEngine searchEngine = new SearchEngine(4);
+
+
+
+
+        SearchEngine searchEngine = new SearchEngine(6);
         Searchable book = new SimpleProduct("Книга", "Печатное издание", 505);
         Searchable book1 = new SimpleProduct("Книга1", "Печатное издание", 500);
 
@@ -96,6 +103,7 @@ public class App {
             System.out.println("Успех: Товар \"" + missingProduct + "\" отсутствует в корзине.");
         }
 
+        /*
         productBasket.clearCartCompletely();
         String searchProduct = "Яблоко";
 
@@ -104,5 +112,7 @@ public class App {
         } else {
             System.out.println("Успех: Метод вернул false. В пустой корзине товар \"" + searchProduct + "\" не найден.");
         }
+
+         */
     }
 }

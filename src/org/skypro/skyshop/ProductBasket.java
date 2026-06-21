@@ -1,39 +1,44 @@
 package org.skypro.skyshop;
 
+import java.util.*;
+
 public class ProductBasket {
-    private final Product[] products;
+    private Map<String, Product> products;
 
     public ProductBasket() {
-        this.products = new Product[5];
+        this.products = new TreeMap<>();
+
     }
 
+
+
+    public void clearProduct(Product product) {
+        if (products.remove(product.getName()) != null) {
+            System.out.println("Удален продукт: " + product.getName());
+        } else {
+            System.out.println("Продукт " + product.getName() + " не найден в корзине.");
+        }
+    }
+
+
+
+
     public void addProduct(Product product) {
-        if (product == null) {
+            if (product == null || product.getName() == null){
             System.out.println("Ошибка: нельзя добавить пустой товар.");
             return;
         }
 
-        for (int i = 0; i < products.length; i++) {
-            if (products[i] == null) {
-                products[i] = product;
-                System.out.println(product.getName() + " добавлен в корзину.");
-                return;
-            }
-        }
-        System.out.println("Невозможно добавить продукт: корзина заполнена.");
+        products.put(product.getName(), product);
+        System.out.println(product.getName() + " добавлен в корзину.");
     }
 
     public boolean hasProductByName(String productName) {
         if (productName == null) {
             return false;
         }
+        return products.containsKey(productName);
 
-        for (Product product : products) {
-            if (product != null && productName.equalsIgnoreCase(product.getName())) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -45,7 +50,7 @@ public class ProductBasket {
         int specialItemsCount = 0;
         boolean isEmpty = true;
 
-        for (Product product : products) {
+        for (Product product : products.values()) {
             if (product != null) {
                 sb.append(product).append("\n");
                 totalSum += product.getPrice();
@@ -67,9 +72,7 @@ public class ProductBasket {
     }
 
     public void clearCartCompletely() {
-        for (int i = 0; i < products.length; i++) {
-            products[i] = null;
-        }
+        products.clear();
         System.out.println("Корзина полностью очищена.");
     }
 }
