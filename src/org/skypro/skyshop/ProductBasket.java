@@ -1,12 +1,13 @@
 package org.skypro.skyshop;
 
 import java.util.*;
+import java.util.Collections;
 
 public class ProductBasket {
-    private Map<String, Product> products;
+    private Map<String, List<Product>> products = new HashMap<>();
 
     public ProductBasket() {
-        this.products = new TreeMap<>();
+
 
     }
 
@@ -24,12 +25,12 @@ public class ProductBasket {
 
 
     public void addProduct(Product product) {
-            if (product == null || product.getName() == null){
+        if (product == null || product.getName() == null || product.getName().isBlank()) {
             System.out.println("Ошибка: нельзя добавить пустой товар.");
             return;
         }
 
-        products.put(product.getName(), product);
+        products.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
         System.out.println(product.getName() + " добавлен в корзину.");
     }
 
@@ -49,15 +50,22 @@ public class ProductBasket {
         double totalSum = 0;
         int specialItemsCount = 0;
         boolean isEmpty = true;
+        List<String> sortedNames = new ArrayList<>(products.keySet());
+        sortedNames.sort(String.CASE_INSENSITIVE_ORDER);
 
-        for (Product product : products.values()) {
-            if (product != null) {
-                sb.append(product).append("\n");
-                totalSum += product.getPrice();
-                if (product.isSpecial()) {
-                    specialItemsCount++;
+        for (String name : sortedNames) {
+            List<Product> productList = products.get(name);
+            if (productList  != null) {
+                for (Product product : productList) {
+                    if (product != null) {
+                        sb.append(product).append("\n");
+                        totalSum += product.getPrice();
+                        if (product.isSpecial()) {
+                            specialItemsCount++;
+                        }
+                        isEmpty = false;
+                    }
                 }
-                isEmpty = false;
             }
         }
 

@@ -42,7 +42,7 @@ public class App {
 
 
 
-        FixPriceProduct apple = new FixPriceProduct("Яблоко", "Фрукт", 50);
+        FixPriceProduct apple = new FixPriceProduct("банан", "Фрукт", 50);
         DiscountedProduct banana = new DiscountedProduct("Банан", "Фрукт", 30, 20);
         DiscountedProduct lemon = new DiscountedProduct("Лимон", "Фрукт", 30, 20);
         FixPriceProduct kiwi = new FixPriceProduct("Киви", "Фрукт", 10);
