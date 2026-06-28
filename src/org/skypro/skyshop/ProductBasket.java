@@ -4,9 +4,10 @@ import java.util.*;
 import java.util.Collections;
 
 public class ProductBasket {
-    private Map<String, List<Product>> products = new HashMap<>();
+    private Map<String, List<Product>> products = new TreeMap<>();
 
     public ProductBasket() {
+
 
 
     }
@@ -83,4 +84,6 @@ public class ProductBasket {
         products.clear();
         System.out.println("Корзина полностью очищена.");
     }
+
+
 }

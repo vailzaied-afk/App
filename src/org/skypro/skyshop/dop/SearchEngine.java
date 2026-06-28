@@ -1,16 +1,19 @@
 package org.skypro.skyshop.dop;
 
 import org.skypro.skyshop.BestResultNotFound.BestResultNotFound;
+import org.skypro.skyshop.Product;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
 
 import static java.nio.file.Files.lines;
 
 public class SearchEngine {
-    private final ArrayList<Searchable> lines;
+    private final HashSet<Searchable> lines;
 
     public SearchEngine(int cell) {
-        this.lines = new ArrayList<>(cell);
+        this.lines = new HashSet<>(cell);
     }
 
     public void add(Searchable element) {
@@ -18,21 +21,19 @@ public class SearchEngine {
             return;
         }
 
-        for (int i = 0; i < lines.size(); i++) {
-            if (lines.get(i) == null) {
-                lines.set(i, element);
-                return;
-            }
+        boolean isAdded = lines.add(element);
+
+        if (!isAdded) {
+            System.out.println("Нет свободного места для добавления элемента.");
         }
-        System.out.println("Нет свободного места для добавления элемента.");
     }
 
     public Searchable[] search(String query) {
         Searchable[] results = new Searchable[5];
         int resultCount = 0;
 
-        for (int i = 0; i < lines.size(); i++) {
-            if (lines.get(i) == null) {
+        for (Searchable line: lines) {
+            if (line == null) {
                 continue;
             }
 
@@ -40,8 +41,8 @@ public class SearchEngine {
                 break;
             }
 
-            if (lines.get(i).searchTerm().contains(query)) {
-                results[resultCount] = lines.get(i);
+            if (line.searchTerm().contains(query)) {
+                results[resultCount] = line;
                 resultCount++;
             }
         }
@@ -92,4 +93,18 @@ public class SearchEngine {
 
         return bestMatch;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SearchEngine that = (SearchEngine) o;
+        return Objects.equals(lines, that.lines);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lines);
+    }
+
 }

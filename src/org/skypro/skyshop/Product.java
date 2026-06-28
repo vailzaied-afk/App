@@ -44,4 +44,13 @@ public abstract class Product implements Searchable {
             throw new IllegalArgumentException("Message is null");
         }
     }
+    public int compareTo(Product o) {
+        int priceCompare = Double.compare(this.getPrice(), o.getPrice());
+
+        if (priceCompare == 0) {
+            return this.name.compareTo(o.getName());
+        }
+
+        return priceCompare;
+    }
 }
