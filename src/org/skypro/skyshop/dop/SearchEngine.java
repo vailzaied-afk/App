@@ -3,9 +3,8 @@ package org.skypro.skyshop.dop;
 import org.skypro.skyshop.BestResultNotFound.BestResultNotFound;
 import org.skypro.skyshop.Product;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.nio.file.Files.lines;
 
@@ -28,30 +27,18 @@ public class SearchEngine {
         }
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int resultCount = 0;
-
-        for (Searchable line: lines) {
-            if (line == null) {
-                continue;
-            }
-
-            if (resultCount == 5) {
-                break;
-            }
-
-            if (line.searchTerm().contains(query)) {
-                results[resultCount] = line;
-                resultCount++;
-            }
-        }
-
-        Searchable[] trimmedResults = new Searchable[resultCount];
-        System.arraycopy(results, 0, trimmedResults, 0, resultCount);
-
-        return trimmedResults;
+    public Set<Searchable> search(String query) {
+        return this.lines.stream()
+                .filter(Objects::nonNull)
+                .filter(item -> getSearchTerm(item.searchTerm(), query) > 0)
+                .collect(Collectors.toCollection(() -> new TreeSet<>(
+                        Comparator.<Searchable>comparingInt(item -> getSearchTerm(item.searchTerm(), query))
+                                .reversed()
+                                .thenComparing(Searchable::searchTerm)
+                )));
     }
+
+
     public static int getSearchTerm(String str, String substring) {
         if (str == null || substring == null || substring.isEmpty() || str.isEmpty()) {
             return 0;
