@@ -6,14 +6,15 @@ import org.skypro.skyshop.dop.SearchEngine;
 import org.skypro.skyshop.dop.Searchable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.skypro.skyshop.DiscountedProduct.checkPriceDiscounted;
 
 
 public class App {
-    private static void printSearchResults(Searchable[] results){
-        if (results.length == 0) {
+    private static void printSearchResults(Collection<Searchable> results){
+        if (results.size() == 0) {
             System.out.println("Ничего не найдено.");
             return;
         }
@@ -42,7 +43,7 @@ public class App {
 
 
 
-        FixPriceProduct apple = new FixPriceProduct("Яблоко", "Фрукт", 50);
+        FixPriceProduct apple = new FixPriceProduct("банан", "Фрукт", 50);
         DiscountedProduct banana = new DiscountedProduct("Банан", "Фрукт", 30, 20);
         DiscountedProduct lemon = new DiscountedProduct("Лимон", "Фрукт", 30, 20);
         FixPriceProduct kiwi = new FixPriceProduct("Киви", "Фрукт", 10);

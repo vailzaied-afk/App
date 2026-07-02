@@ -1,12 +1,15 @@
 package org.skypro.skyshop;
 
 import java.util.*;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class ProductBasket {
-    private Map<String, Product> products;
+    private Map<String, List<Product>> products = new TreeMap<>();
 
     public ProductBasket() {
-        this.products = new TreeMap<>();
+
+
 
     }
 
@@ -24,12 +27,12 @@ public class ProductBasket {
 
 
     public void addProduct(Product product) {
-            if (product == null || product.getName() == null){
+        if (product == null || product.getName() == null || product.getName().isBlank()) {
             System.out.println("Ошибка: нельзя добавить пустой товар.");
             return;
         }
 
-        products.put(product.getName(), product);
+        products.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
         System.out.println(product.getName() + " добавлен в корзину.");
     }
 
@@ -43,36 +46,51 @@ public class ProductBasket {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Содержимое корзины:\n");
 
-        double totalSum = 0;
-        int specialItemsCount = 0;
-        boolean isEmpty = true;
-
-        for (Product product : products.values()) {
-            if (product != null) {
-                sb.append(product).append("\n");
-                totalSum += product.getPrice();
-                if (product.isSpecial()) {
-                    specialItemsCount++;
-                }
-                isEmpty = false;
-            }
-        }
-
-        if (isEmpty) {
+        List<Product> allProducts = products.values().stream()
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .sorted(Comparator.comparing(Product::getName, String.CASE_INSENSITIVE_ORDER))
+                .toList();
+        if (allProducts.isEmpty()) {
             return "В корзине пусто\nИтого: 0 руб.";
         }
 
-        sb.append("Специальных товаров: ").append(specialItemsCount).append("\n");
-        sb.append("Итого: ").append(totalSum).append(" руб.");
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("Содержимое корзины:\n");
+        allProducts.stream()
+                .forEach(product -> sb.append(product).append("\n"));
+
+                sb.append("Специальных товаров: ").append(getSpecialCount()).append("\n")
+                .append("Итого: ").append(getTotalPrice()).append(" руб.");
+
+
 
         return sb.toString();
+    }
+    public  double getTotalPrice(){
+        return products.values().stream()
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .mapToDouble(Product::getPrice)
+                .sum();
+
+    }
+    public long getSpecialCount(){
+        return products.values().stream()
+                .filter(Objects::nonNull)
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .filter(Product::isSpecial)
+        .count();
     }
 
     public void clearCartCompletely() {
         products.clear();
         System.out.println("Корзина полностью очищена.");
     }
+
+
 }

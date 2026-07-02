@@ -1,16 +1,18 @@
 package org.skypro.skyshop.dop;
 
 import org.skypro.skyshop.BestResultNotFound.BestResultNotFound;
+import org.skypro.skyshop.Product;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.nio.file.Files.lines;
 
 public class SearchEngine {
-    private final ArrayList<Searchable> lines;
+    private final HashSet<Searchable> lines;
 
     public SearchEngine(int cell) {
-        this.lines = new ArrayList<>(cell);
+        this.lines = new HashSet<>(cell);
     }
 
     public void add(Searchable element) {
@@ -18,39 +20,25 @@ public class SearchEngine {
             return;
         }
 
-        for (int i = 0; i < lines.size(); i++) {
-            if (lines.get(i) == null) {
-                lines.set(i, element);
-                return;
-            }
+        boolean isAdded = lines.add(element);
+
+        if (!isAdded) {
+            System.out.println("Нет свободного места для добавления элемента.");
         }
-        System.out.println("Нет свободного места для добавления элемента.");
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
-        int resultCount = 0;
-
-        for (int i = 0; i < lines.size(); i++) {
-            if (lines.get(i) == null) {
-                continue;
-            }
-
-            if (resultCount == 5) {
-                break;
-            }
-
-            if (lines.get(i).searchTerm().contains(query)) {
-                results[resultCount] = lines.get(i);
-                resultCount++;
-            }
-        }
-
-        Searchable[] trimmedResults = new Searchable[resultCount];
-        System.arraycopy(results, 0, trimmedResults, 0, resultCount);
-
-        return trimmedResults;
+    public Set<Searchable> search(String query) {
+        return this.lines.stream()
+                .filter(Objects::nonNull)
+                .filter(item -> getSearchTerm(item.searchTerm(), query) > 0)
+                .collect(Collectors.toCollection(() -> new TreeSet<>(
+                        Comparator.<Searchable>comparingInt(item -> getSearchTerm(item.searchTerm(), query))
+                                .reversed()
+                                .thenComparing(Searchable::searchTerm)
+                )));
     }
+
+
     public static int getSearchTerm(String str, String substring) {
         if (str == null || substring == null || substring.isEmpty() || str.isEmpty()) {
             return 0;
@@ -92,4 +80,18 @@ public class SearchEngine {
 
         return bestMatch;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SearchEngine that = (SearchEngine) o;
+        return Objects.equals(lines, that.lines);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lines);
+    }
+
 }
